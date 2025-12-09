@@ -1,64 +1,94 @@
-# RAG Document Chat System (FastAPI + LangChain)
+📘 RAG-Chatbot — Document-Aware AI Assistant
 
-An AI-powered document question-answering system using **Retrieval Augmented Generation (RAG)**.  
-Upload PDFs, text files, and scanned images — the system extracts content using OCR (Tesseract), stores embeddings in FAISS, and enables **conversational queries** grounded in your documents.
+A Retrieval-Augmented Generation chatbot that allows users to upload PDFs, text files, and even images to extract knowledge and chat intelligently based on the uploaded content. Supports real-time Q&A, chat history, and dynamic UI — powered by FastAPI, LangChain, Hugging Face embeddings, and FAISS vector search.
 
----
+<div align="center"> 🚀 *Ask questions from your documents. Get accurate, context-based answers instantly!* </div>
+🌟 Key Features
 
-## 🚀 Features
+✔ Upload PDFs, text files, scanned images
+✔ Automatic OCR with text extraction
+✔ FAISS-based vector search for relevant answers
+✔ Real-time interactive chat UI
+✔ Chat history view & management
+✔ Reset chat + delete uploaded files
+✔ Fully local processing (no cloud dependency)
 
-🔹 Upload and process multiple document formats (PDF, TXT, and Images)  
-🔹 OCR support for scanned PDFs and images  
-🔹 Streaming responses for faster interaction  
-🔹 Chat memory — maintains context across conversation  
-🔹 FAISS vector search for accurate retrieval  
-🔹 Uses open-source Hugging Face models (no paid API required)  
-🔹 Clear separation between UI, backend logic, and vector store  
-🔹 Option to reset chat and document knowledge base anytime
+🧩 Tech Stack
+Backend
 
----
+FastAPI
 
-## 🧠 Tech Stack
+LangChain (RAG Pipeline)
 
-| Component | Technology |
-|----------|------------|
-| Backend | FastAPI |
-| RAG | LangChain |
-| Embeddings | HuggingFace |
-| Vector DB | FAISS |
-| OCR | Pytesseract |
-| File Handling | Python, UUID |
-| Model | FLAN-T5 or compatible HF model |
+FAISS (Vector Database)
 
----
+Hugging Face Embeddings
 
-## 📂 Project Structure
+OCR: Pytesseract + Pillow
 
-📦 chatbot
-├─ data/                  # Predefined knowledge base files (if any)
-├─ faiss_db/              # Vector database storage (auto-generated)
-├─ static/                # Static assets (UI files, CSS, JS) if used
-├─ uploaded_files/        # User-uploaded files stored here
-├─ venv/                  # Python virtual environment (excluded in Git)
-├─ __pycache__/           # Python cache files (excluded in Git)
-├─ main.py                # FastAPI application code
-├─ requirements.txt       # Python dependencies
-└─ README.md              # Documentation (will be added)
+Python-dotenv
 
+Python 3.10+
 
-1. Create Virtual Environment
+Frontend
+
+HTML5, CSS3, Teal UI Theme
+
+JavaScript (Fetch API REST communication)
+
+Scrollable real-time messaging UI
+
+Storage
+Purpose	Location
+Uploaded files	uploaded_files/
+Vector DB	faiss_db/
+OAuth keys	.env
+📂 Project Folder Structure
+chatbot/
+│
+├── data/                 # Optional predefined documents
+├── faiss_db/             # Vector store generated automatically
+├── static/               # Frontend HTML, CSS, JS (UI)
+├── uploaded_files/       # User uploads stored temporarily
+│
+├── main.py               # FastAPI backend + RAG chain implementation
+├── requirements.txt      # Dependencies
+├── .env                  # Hugging Face / secrets (Not included in git)
+└── README.md
+
+🛠 Installation & Setup
+1️⃣ Clone Repository
+git clone https://github.com/<your-username>/RAG-Chatbot.git
+cd RAG-Chatbot
+
+2️⃣ Create & Activate Virtual Environment
 python -m venv venv
-venv\Scripts\activate     # Windows
-# source venv/bin/activate (Mac/Linux)
+venv\Scripts\activate   # Windows
 
-2. Install Dependencies
+3️⃣ Install Dependencies
 pip install -r requirements.txt
 
-3. Add Hugging Face Token
+4️⃣ Add .env File
 
-Create .env file:
+Create a .env file in project root:
 
-HF_TOKEN=your_huggingface_access_token
+HF_TOKEN=your_huggingface_api_key_here
 
-4. Run the App
+(Get token from Hugging Face → Settings → Access Tokens)
+
+
+📸 UI Preview
+
+📌 Screenshot Placeholder: <img width="1890" height="896" alt="Screenshot (11)" src="https://github.com/user-attachments/assets/4df9cf90-4e07-4e57-af4e-110e68341892" />
+
+
+📌 Screenshot Placeholder: <img width="1896" height="901" alt="Screenshot (12)" src="https://github.com/user-attachments/assets/5a859c97-a79e-486b-8a76-77408226baac" />
+
+
+5️⃣ Run App
 uvicorn main:app --reload
+
+
+🌍 Open Browser →
+http://127.0.0.1:8000
+
