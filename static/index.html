@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>RAG Chatbot</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Poppins', sans-serif; background: #f0f4f8; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+
+    /* ----------------- Container ----------------- */
+    #container { width: 95%; max-width: 1200px; position: relative; }
+
+    /* ----------------- Chat Card ----------------- */
+    #chatCard {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        max-height: 90vh;
+        overflow: hidden;
+    }
+
+    #chatHeader {
+        background: teal;
+        color: #fff;
+        padding: 15px;
+        font-size: 1.3rem;
+        font-weight: 600;
+        text-align: center;
+    }
+
+    #uploaded-preview {
+        display: flex;
+        padding: 10px 15px;
+        gap: 10px;
+        overflow-x: auto;
+        border-bottom: 1px solid #eee;
+    }
+
+    img.preview {
+        max-height: 50px;
+        border-radius: 6px;
+        border: 2px solid teal;
+    }
+
+    #actionButtons {
+        display: flex;
+        gap: 10px;
+        padding: 10px 15px;
+        background: #f9f9f9;
+        border-bottom: 1px solid #eee;
+        flex-wrap: wrap;
+    }
+
+    #actionButtons input[type=file] {
+        flex: 2;
+        padding: 6px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+    }
+
+    #actionButtons button {
+        flex: 1;
+        padding: 8px;
+        border-radius: 6px;
+        border: none;
+        background: teal;
+        color: #fff;
+        cursor: pointer;
+        font-weight: 500;
+        transition: 0.2s;
+    }
+
+    #actionButtons button:hover { background: #0f606e; }
+
+    #messages {
+        flex: 1;
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        overflow-y: auto;
+        background: #f9f9f9;
+    }
+
+    .message {
+        max-width: 85%;
+        padding: 12px 16px;
+        border-radius: 20px;
+        word-wrap: break-word;
+        font-size: 0.95rem;
+        line-height: 1.4;
+    }
+
+    .user {
+        align-self: flex-end;
+        background: #17a2b8;
+        color: #fff;
+        border-bottom-right-radius: 5px;
+    }
+
+    .bot {
+        align-self: flex-start;
+        background: #e2e3e5;
+        color: #333;
+        border-bottom-left-radius: 5px;
+    }
+
+    #input-area {
+        display: flex;
+        gap: 10px;
+        padding: 12px 15px;
+        background: #fff;
+        border-top: 1px solid #ddd;
+    }
+
+    #input-area input {
+        flex: 1;
+        padding: 10px 15px;
+        border-radius: 20px;
+        border: 1px solid #ccc;
+        outline: none;
+        font-size: 0.95rem;
+    }
+
+    #input-area button {
+        padding: 10px 15px;
+        border-radius: 20px;
+        border: none;
+        background: teal;
+        color: #fff;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    #input-area button:hover { background: #0f606e; }
+
+    /* ----------------- History Drawer ----------------- */
+    #historyOverlay {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 350px;
+        height: 100vh;
+        background: #fff;
+        box-shadow: -5px 0 20px rgba(0,0,0,0.3);
+        padding: 20px;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        z-index: 1000;
+        overflow-y: auto;
+    }
+
+    #historyOverlay.active { transform: translateX(0); }
+
+    #historyOverlay h3 { margin-bottom: 15px; color: teal; text-align: center; }
+
+    #historyContent div {
+        margin-bottom: 8px;
+        padding: 8px 10px;
+        background: #f1f1f1;
+        border-radius: 10px;
+    }
+
+    #overlayBg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0,0,0,0.3);
+        display: none;
+        z-index: 900;
+    }
+
+    #overlayBg.active { display: block; }
+
+    .thinking {
+        opacity: 0.7;
+        font-style: italic;
+    }
+    
+    /* Remove sources styling since we're not showing them anymore */
+</style>
+</head>
+<body>
+
+<div id="container">
+    <div id="chatCard">
+        <div id="chatHeader">📘 RAG Chatbot</div>
+        <div id="uploaded-preview"></div>
+
+        <div id="actionButtons">
+            <input type="file" id="file-upload" accept=".txt,.pdf,.png,.jpg,.jpeg,.bmp,.tiff" />
+            <button onclick="uploadFile()">Upload</button>
+            <button onclick="newChat()">New Chat</button>
+            <button onclick="clearHistory()">Clear History</button>
+            <button onclick="toggleHistory()">History</button>
+        </div>
+
+        <div id="messages">
+          
+        </div>
+
+        <div id="input-area">
+            <input type="text" id="messageInput" placeholder="Type your message..." onkeypress="handleKeyPress(event)" />
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+</div>
+
+
+<div id="historyOverlay">
+    <h3>Chat History</h3>
+    <div id="historyContent"></div>
+</div>
+<div id="overlayBg" onclick="toggleHistory()"></div>
+
+<script>
+let isProcessing = false;
+
+async function uploadFile() {
+    if (isProcessing) return;
+    const fileInput = document.getElementById('file-upload');
+    if(fileInput.files.length === 0) return alert("Select a file first!");
+    const file = fileInput.files[0];
+    const formData = new FormData();
+    formData.append("file", file);
+    
+    isProcessing = true;
+    try {
+        const res = await fetch("/upload", { method:"POST", body: formData });
+        const data = await res.json();
+        alert(`File ${data.filename} uploaded successfully! ${data.chunks} chunks processed.`);
+        if(file.type.startsWith("image/")) {
+            const preview = document.getElementById('uploaded-preview');
+            const img = document.createElement('img');
+            img.src = URL.createObjectURL(file);
+            img.className = "preview";
+            preview.appendChild(img);
+        }
+        fileInput.value = '';
+    } catch (error) {
+        alert("Error uploading file: " + error);
+    } finally {
+        isProcessing = false;
+    }
+}
+
+async function sendMessage() {
+    if (isProcessing) return;
+    const input = document.getElementById("messageInput");
+    const text = input.value.trim();
+    if (!text) return;
+    
+    appendMessage("user", text);
+    input.value = "";
+    
+    // Show thinking indicator
+    const thinkingMsg = appendMessage("bot", "Thinking...", true);
+    
+    isProcessing = true;
+    try {
+        const res = await fetch("/chat", { 
+            method: "POST", 
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({ message: text }) 
+        });
+        const data = await res.json();
+        
+        // Remove thinking message
+        thinkingMsg.remove();
+        
+        appendMessage("bot", data.answer);
+    } catch (error) {
+        thinkingMsg.remove();
+        appendMessage("bot", "Sorry, I encountered an error. Please try again.");
+    } finally {
+        isProcessing = false;
+    }
+}
+
+function handleKeyPress(event) {
+    if (event.key === 'Enter' && !isProcessing) {
+        sendMessage();
+    }
+}
+
+function appendMessage(sender, content, isThinking = false) {
+    const messages = document.getElementById("messages");
+    const div = document.createElement("div");
+    
+    let className = `message ${sender}`;
+    if (isThinking) className += ' thinking';
+    
+    div.className = className;
+    
+    if (isThinking) {
+        div.textContent = content;
+        messages.appendChild(div);
+        messages.scrollTop = messages.scrollHeight;
+        return div;
+    }
+    
+    // Format content - convert line breaks
+    div.innerHTML = content.replace(/\n/g, '<br>');
+
+    messages.appendChild(div);
+    messages.scrollTop = messages.scrollHeight;
+    return div;
+}
+
+async function clearHistory() {
+    if (isProcessing) return;
+    await fetch("/clear_history", { method: "POST" });
+    document.getElementById("messages").innerHTML = '';
+}
+
+async function newChat() {
+    if (isProcessing) return;
+    if (!confirm("This will clear all chat history and uploaded files. Continue?")) return;
+    
+    await fetch("/new_chat", { method: "POST" });
+    document.getElementById("messages").innerHTML = '';
+    document.getElementById("uploaded-preview").innerHTML = '';
+}
+
+let historyOpen = false;
+async function toggleHistory() {
+    const overlay = document.getElementById("historyOverlay");
+    const bg = document.getElementById("overlayBg");
+
+    if(!historyOpen) {
+        overlay.classList.add("active");
+        bg.classList.add("active");
+        await loadHistory();
+        historyOpen = true;
+    } else {
+        overlay.classList.remove("active");
+        bg.classList.remove("active");
+        historyOpen = false;
+    }
+}
+
+async function loadHistory() {
+    const res = await fetch("/history");
+    const data = await res.json();
+    const historyDiv = document.getElementById("historyContent");
+    historyDiv.innerHTML = "";
+    data.history.forEach(msg => {
+        const sender = msg.type === "human" ? "You" : "Bot";
+        const item = document.createElement("div");
+        item.innerHTML = `<strong>${sender}:</strong> ${msg.data.content}`;
+        historyDiv.appendChild(item);
+    });
+}
+</script>
+</body>
+</html>

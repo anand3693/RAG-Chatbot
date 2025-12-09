@@ -1,0 +1,17 @@
+Artificial Intelligence (AI) is a branch of computer science focused on creating machines capable of performing tasks that typically require human intelligence. These tasks include learning, reasoning, problem-solving, perception, and natural language understanding.
+ 
+Machine Learning (ML) is a subset of AI that allows computers to learn from data and improve over time without being explicitly programmed. ML algorithms identify patterns and make predictions based on large datasets.
+ 
+Deep Learning (DL) is a type of machine learning that uses neural networks with many layers. It is highly effective for image recognition, speech processing, and natural language tasks.
+ 
+Computer Vision is a field of AI that enables computers to interpret and make decisions based on visual data such as images and videos. Applications include facial recognition, autonomous vehicles, and medical imaging.
+ 
+Natural Language Processing (NLP) focuses on enabling machines to understand and generate human language. It is used in chatbots, translation systems, and sentiment analysis.
+ 
+Artificial intelligence is used in various industries such as healthcare (disease prediction), finance (fraud detection), and retail (recommendation systems).
+ 
+Robotics is an interdisciplinary field that combines AI, mechanical engineering, and electronics to design machines that can perform complex physical tasks.
+ 
+Data Science combines statistics, computer science, and domain knowledge to extract insights from structured and unstructured data.
+ 
+The future of AI involves advancements in ethical AI, explainable AI, and AI governance to ensure fairness, transparency, and accountability.
