@@ -1,9 +1,9 @@
-📘 RAG-Chatbot — Document-Aware AI Assistant
+## 📘 RAG-Chatbot — Document-Aware AI Assistant
 
 A Retrieval-Augmented Generation chatbot that allows users to upload PDFs, text files, and even images to extract knowledge and chat intelligently based on the uploaded content. Supports real-time Q&A, chat history, and dynamic UI — powered by FastAPI, LangChain, Hugging Face embeddings, and FAISS vector search.
 
 <div align="center"> 🚀 *Ask questions from your documents. Get accurate, context-based answers instantly!* </div>
-🌟 Key Features
+## 🌟 Key Features
 
 ✔ Upload PDFs, text files, scanned images
 ✔ Automatic OCR with text extraction
@@ -13,7 +13,7 @@ A Retrieval-Augmented Generation chatbot that allows users to upload PDFs, text 
 ✔ Reset chat + delete uploaded files
 ✔ Fully local processing (no cloud dependency)
 
-🧩 Tech Stack
+## 🧩 Tech Stack
 Backend
 
 FastAPI
@@ -43,7 +43,9 @@ Purpose	Location
 Uploaded files	uploaded_files/
 Vector DB	faiss_db/
 OAuth keys	.env
-📂 Project Folder Structure
+
+
+## 📂 Project Folder Structure
 chatbot/
 │
 ├── data/                 # Optional predefined documents
@@ -56,7 +58,7 @@ chatbot/
 ├── .env                  # Hugging Face / secrets (Not included in git)
 └── README.md
 
-🛠 Installation & Setup
+## 🛠 Installation & Setup
 1️⃣ Clone Repository
 git clone https://github.com/<your-username>/RAG-Chatbot.git
 cd RAG-Chatbot
@@ -77,7 +79,7 @@ HF_TOKEN=your_huggingface_api_key_here
 (Get token from Hugging Face → Settings → Access Tokens)
 
 
-📸 UI Preview
+## 📸 UI Preview
 
 <img width="1890" height="896" alt="Screenshot (11)" src="https://github.com/user-attachments/assets/4df9cf90-4e07-4e57-af4e-110e68341892" />: Chat UI
 
@@ -85,10 +87,5 @@ HF_TOKEN=your_huggingface_api_key_here
 <img width="1896" height="901" alt="Screenshot (12)" src="https://github.com/user-attachments/assets/5a859c97-a79e-486b-8a76-77408226baac" />: History Sidebar
 
 
-5️⃣ Run App
+## 5️⃣ Run App
 uvicorn main:app --reload
-
-
-🌍 Open Browser →
-http://127.0.0.1:8000
-
