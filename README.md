@@ -3,7 +3,7 @@
 A Retrieval-Augmented Generation chatbot that allows users to upload PDFs, text files, and even images to extract knowledge and chat intelligently based on the uploaded content. Supports real-time Q&A, chat history, and dynamic UI — powered by FastAPI, LangChain, Hugging Face embeddings, and FAISS vector search.
 
 <div align="center"> 🚀 *Ask questions from your documents. Get accurate, context-based answers instantly!* </div>
-## 🌟 Key Features
+🌟 Key Features
 
 ✔ Upload PDFs, text files, scanned images
 ✔ Automatic OCR with text extraction
