@@ -79,10 +79,10 @@ HF_TOKEN=your_huggingface_api_key_here
 
 📸 UI Preview
 
-📌 Screenshot Placeholder: <img width="1890" height="896" alt="Screenshot (11)" src="https://github.com/user-attachments/assets/4df9cf90-4e07-4e57-af4e-110e68341892" />
+<img width="1890" height="896" alt="Screenshot (11)" src="https://github.com/user-attachments/assets/4df9cf90-4e07-4e57-af4e-110e68341892" />: Chat UI
 
 
-📌 Screenshot Placeholder: <img width="1896" height="901" alt="Screenshot (12)" src="https://github.com/user-attachments/assets/5a859c97-a79e-486b-8a76-77408226baac" />
+<img width="1896" height="901" alt="Screenshot (12)" src="https://github.com/user-attachments/assets/5a859c97-a79e-486b-8a76-77408226baac" />: History Sidebar
 
 
 5️⃣ Run App
