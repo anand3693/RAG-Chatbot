@@ -152,9 +152,6 @@ def initialize_memory():
     return memory
 
 def create_rag_chain(force_rebuild_db: bool = False):
-    """
-    Build or rebuild the RAG chain using FAISS.
-    """
     global rag_chain, memory
 
     print(f"Creating RAG chain, force_rebuild_db: {force_rebuild_db}")
@@ -366,14 +363,6 @@ async def clear_history():
 
 @app.post("/new_chat")
 async def new_chat():
-    """
-    Steps for new chat:
-    1. Clear in-memory chat history
-    2. Reset rag_chain global so next ensure/load builds fresh chain
-    3. Remove FAISS DB dir
-    4. Remove uploaded files
-    5. Rebuild chain from only predefined data
-    """
     global rag_chain
 
     try:
@@ -410,7 +399,6 @@ async def new_chat():
 
 @app.get("/debug/sources")
 async def debug_sources():
-    """Debug endpoint to see what's in the FAISS docstore"""
     try:
         if not os.path.exists(DB_DIR) or not os.listdir(DB_DIR):
             return {"error": "FAISS DB not initialized or empty."}
@@ -428,7 +416,6 @@ async def debug_sources():
                     "length": len(content)
                 })
         except Exception:
-            # Fallback: similarity search
             retrieved = vectordb.similarity_search("", k=100)
             for idx, d in enumerate(retrieved):
                 docs.append({
@@ -447,7 +434,6 @@ async def debug_sources():
 
 @app.get("/health")
 async def health_check():
-    """Health check endpoint"""
     documents_exist = len(load_documents()) > 0
     rag_ready = rag_chain is not None
     db_exists = os.path.exists(DB_DIR) and os.listdir(DB_DIR)
