@@ -8,10 +8,8 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Poppins', sans-serif; background: #f0f4f8; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
 
-    /* ----------------- Container ----------------- */
     #container { width: 95%; max-width: 1200px; position: relative; }
 
-    /* ----------------- Chat Card ----------------- */
     #chatCard {
         width: 100%;
         display: flex;
@@ -138,7 +136,6 @@
 
     #input-area button:hover { background: #0f606e; }
 
-    /* ----------------- History Drawer ----------------- */
     #historyOverlay {
         position: fixed;
         top: 0;
@@ -183,7 +180,6 @@
         font-style: italic;
     }
     
-    /* Remove sources styling since we're not showing them anymore */
 </style>
 </head>
 <body>
@@ -258,8 +254,7 @@ async function sendMessage() {
     
     appendMessage("user", text);
     input.value = "";
-    
-    // Show thinking indicator
+
     const thinkingMsg = appendMessage("bot", "Thinking...", true);
     
     isProcessing = true;
@@ -272,8 +267,7 @@ async function sendMessage() {
             body: new URLSearchParams({ message: text }) 
         });
         const data = await res.json();
-        
-        // Remove thinking message
+
         thinkingMsg.remove();
         
         appendMessage("bot", data.answer);
@@ -306,8 +300,7 @@ function appendMessage(sender, content, isThinking = false) {
         messages.scrollTop = messages.scrollHeight;
         return div;
     }
-    
-    // Format content - convert line breaks
+
     div.innerHTML = content.replace(/\n/g, '<br>');
 
     messages.appendChild(div);
